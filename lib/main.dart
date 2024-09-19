@@ -19,6 +19,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   Timer? _hungerTimer;
   String _petMood = "Neutral";
   Color _petColor = Colors.yellow;
+  String _petMoodImage = 'images/neutralcat.png'; // Image for mood
   bool isGameOver = false;
 
   @override
@@ -88,17 +89,20 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     }
   }
 
-  // Update pet's mood and color based on happiness level
+  // Update pet's mood, color, and image based on happiness level
   void _updatePetMood() {
     if (happinessLevel > 70) {
       _petMood = "Happy 😊";
       _petColor = Colors.green;
+      _petMoodImage = 'images/happycat.png'; // Set happy image
     } else if (happinessLevel >= 30 && happinessLevel <= 70) {
       _petMood = "Neutral 😐";
       _petColor = Colors.yellow;
+      _petMoodImage = 'images/neutralcat.png'; // Set neutral image
     } else {
       _petMood = "Unhappy 😢";
       _petColor = Colors.red;
+      _petMoodImage = 'images/sadcattwo.png'; // Set unhappy image
     }
   }
 
@@ -178,9 +182,20 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
                   Container(
                     padding: const EdgeInsets.all(20),
                     color: _petColor,
-                    child: Text(
-                      'Happiness Level: $happinessLevel',
-                      style: const TextStyle(fontSize: 20.0, color: Colors.white),
+                    child: Column(
+                      children: [
+                        // Display the image corresponding to the pet's mood
+                        Image.asset(
+                          _petMoodImage,
+                          height: 150, // Adjust the image height
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Happiness Level: $happinessLevel',
+                          style:
+                              const TextStyle(fontSize: 20.0, color: Colors.white),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 16.0),
