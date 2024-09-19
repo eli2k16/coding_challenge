@@ -1,4 +1,15 @@
+import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MaterialApp(
+    home: DigitalPetApp(),
+  ));
+}
+
+class DigitalPetApp extends StatefulWidget {
+  @override
+  _DigitalPetAppState createState() => _DigitalPetAppState();
+}
 
 class _DigitalPetAppState extends State<DigitalPetApp> {
   String petName = "Your Pet";
@@ -33,7 +44,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   // Increase hunger level slightly when playing with the pet
   void _updateHunger() {
     hungerLevel = (hungerLevel + 5).clamp(0, 100);
-    if (hungerLevel > 100) {
+    if (hungerLevel >= 100) {
       hungerLevel = 100;
       happinessLevel = (happinessLevel - 20).clamp(0, 100);
     }
@@ -49,33 +60,34 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Name: $petName',
-              style: const TextStyle(fontSize: 20.0),
-            ),
+            _buildPetInfoText('Name: $petName'),
             const SizedBox(height: 16.0),
-            Text(
-              'Happiness Level: $happinessLevel',
-              style: const TextStyle(fontSize: 20.0),
-            ),
+            _buildPetInfoText('Happiness Level: $happinessLevel'),
             const SizedBox(height: 16.0),
-            Text(
-              'Hunger Level: $hungerLevel',
-              style: const TextStyle(fontSize: 20.0),
-            ),
+            _buildPetInfoText('Hunger Level: $hungerLevel'),
             const SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: _playWithPet,
-              child: const Text('Play with Your Pet'),
-            ),
+            _buildActionButton('Play with Your Pet', _playWithPet),
             const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _feedPet,
-              child: const Text('Feed Your Pet'),
-            ),
+            _buildActionButton('Feed Your Pet', _feedPet),
           ],
         ),
       ),
+    );
+  }
+
+  // Widget to display pet's status info
+  Widget _buildPetInfoText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(fontSize: 20.0),
+    );
+  }
+
+  // Widget for action buttons
+  Widget _buildActionButton(String label, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Text(label),
     );
   }
 }
